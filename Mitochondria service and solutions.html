@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Mitochondria Digital Millenium Services: PC Software Solutions, Blogging Hub, Real-Time Calculators, Voice Guides, and Interactive Feedback Chat.">
+    <meta name="keywords" content="PC software services, scientific calculators, voice guides, blogging, feedback chat, tech tutorials">
+    <title>Mitochondria PC Software Services | Mitochondria Corporation</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Bootstrap for responsive layout -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0; padding: 0;
+            background: #f5f7fa; color: #222;
+            transition: background 0.3s, color 0.3s;
+        }
+        body.dark-mode {
+            background: #1e1e1e; color: #ddd;
+        }
+        header {
+            background: linear-gradient(135deg, #1fbfff, #fffc2f);
+            color: white;
+            padding: 1rem 2rem;
+            display: flex; justify-content: space-between; align-items: center;
+            flex-wrap: wrap;
+        }
+        header h1 { margin: 0; font-size: 1.6rem; }
+        header input, select {
+            padding: 0.6rem 1rem;
+            border-radius: 25px; border: none;
+            outline: none; margin-top: .4rem;
+        }
+        nav {
+            background: #fff;
+            padding: 0.5rem 2rem;
+            display: flex; gap: 1rem;
+            justify-content: center; flex-wrap: wrap;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+            position: sticky; top: 0; z-index: 10;
+        }
+        body.dark-mode nav { background: #333; box-shadow: 0 2px 6px rgba(255,255,255,0.1); }
+        nav a {
+            text-decoration: none;
+            color: #0078d7;
+            font-weight: 500;
+        }
+        nav a:hover {
+            text-decoration: underline;
+        }
+        body.dark-mode nav a { color: #00a2ed; }
+
+        /* Service Buttons */
+        .service-buttons {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            padding: 2rem;
+        }
+        .service-btn {
+            background: linear-gradient(135deg, #0078d7, #00a2ed);
+            color: white;
+            border: none; padding: 1rem;
+            border-radius: 10px; font-weight: 600;
+            cursor: pointer; transition: all 0.3s;
+        }
+        .service-btn:hover {
+            transform: scale(1.05); box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        }
+
+        /* Blog Layout */
+        .blog-posts {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            padding: 2rem;
+        }
+        .blog-post {
+            background: white;
+            border-radius: 14px;
+            overflow: hidden;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        body.dark-mode .blog-post { background: #333; box-shadow: 0 4px 10px rgba(255,255,255,0.1); }
+        .blog-post:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 18px rgba(0,0,0,0.15);
+        }
+        .blog-post img {
+            width: 100%; height: 180px;
+            object-fit: cover;
+        }
+        .blog-post h3 {
+            margin: 0.8rem; font-size: 1.1rem;
+        }
+        .blog-post p {
+            margin: 0.8rem; color: #555; font-size: 0.9rem;
+        }
+        body.dark-mode .blog-post p { color: #bbb; }
+
+        /* Calculators Section */
+        .calculators {
+            padding: 2rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        .calculator {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+        body.dark-mode .calculator { background: #333; box-shadow: 0 4px 10px rgba(255,255,255,0.1); }
+        .calculator input, .calculator button {
+            width: 100%; padding: 0.5rem; margin: 0.5rem 0;
+            border-radius: 5px; border: 1px solid #ddd;
+        }
+        body.dark-mode .calculator input, body.dark-mode .calculator button { background: #555; color: #ddd; border-color: #666; }
+        .calculator button { background: #0078d7; color: white; cursor: pointer; }
+        .calculator button:hover { background: #005bb5; }
+
+        /* Voice Tags */
+        .voice-tags {
+            padding: 2rem;
+            text-align: center;
+        }
+        .voice-tag {
+            background: white;
+            margin: 1rem auto;
+            padding: 1rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            max-width: 400px;
+        }
+        body.dark-mode .voice-tag { background: #333; box-shadow: 0 4px 10px rgba(255,255,255,0.1); }
+        .voice-tag button { background: #ff9800; color: white; border: none; padding: 0.8rem; border-radius: 25px; cursor: pointer; }
+
+        /* Chat & Feedback Section */
+        #chat-section {
+            display: none;
+            padding: 2rem; background: white; margin: 2rem auto;
+            width: 90%; border-radius: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            max-height: 500px; overflow-y: auto;
+        }
+        body.dark-mode #chat-section { background: #333; box-shadow: 0 0 10px rgba(255,255,255,0.1); }
+        #chat-section.active { display: block; }
+        .chat-message {
+            margin: 1rem 0; padding: 0.8rem;
+            border-radius: 10px; background: #f0f0f0;
+        }
+        body.dark-mode .chat-message { background: #444; }
+        .chat-inputs {
+            display: flex; gap: 1rem; margin-top: 1rem;
+        }
+        .chat-inputs input, .chat-inputs textarea, .chat-inputs button {
+            flex: 1; padding: 0.5rem; border-radius: 5px; border: 1px solid #ddd;
+        }
+        body.dark-mode .chat-inputs input, body.dark-mode .chat-inputs textarea, body.dark-mode .chat-inputs button { background: #555; color: #ddd; border-color: #666; }
+        .chat-inputs button { background: #0078d7; color: white; cursor: pointer; flex: none; width: auto; }
+
+        /* Other Sections (adapted) */
+        .section { display: none; padding: 2rem; }
+        .section.active { display: block; }
+        table { border-collapse: collapse; width: 100%; margin-top: 1rem; }
+        th, td { border: 1px solid #ddd; padding: 0.7rem; text-align: center; }
+        body.dark-mode th, body.dark-mode td { border-color: #555; }
+        th { background: #0078d7; color: white; }
+        body.dark-mode th { background: #005bb5; }
+
+        /* Footer (unchanged) */
+        footer {
+            background: #222; color: #fff;
+            text-align: center;
+            padding: 1.5rem;
+            margin-top: 2rem;
+            font-size: 0.9rem;
+        }
+        body.dark-mode footer { background: #111; }
+        .widget { margin-bottom: 20px; }
+        .widget h5 { color: #fff; margin-bottom: 15px; }
+        .link-list li { list-style: none; margin-bottom: 5px; }
+        .link-list a { color: #ccc; text-decoration: none; }
+        .link-list a:hover { color: #fff; }
+        .social-network li { display: inline-block; margin-right: 10px; }
+        .social-network a { color: #fff; font-size: 18px; }
+        #sub-footer { background: #111; padding: 15px 0; }
+
+        /* Controls */
+        #feedback, #dark-toggle {
+            position: fixed; bottom: 20px; padding: 0.8rem 1.2rem;
+            border-radius: 25px; cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            background: #000000; color: #fff;
+        }
+        #dark-toggle { left: 20px; }
+        #feedback { right: 20px; }
+
+        /* Modal */
+        #feedback-modal {
+            display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
+            background: white; padding: 2rem; border-radius: 10px; box-shadow: 0 0 20px rgba(0,0,0,0.5);
+            z-index: 1000;
+        }
+        body.dark-mode #feedback-modal { background: #333; color: #ddd; }
+
+        /* Accessibility */
+        :focus { outline: 2px solid #000000; }
+    </style>
+</head>
+
+<body>
+
+<header role="banner">
+    <h1>Mitochondria PC Software Services</h1>
+    <input type="text" id="searchBox" placeholder="🔍 Search services or posts..." aria-label="Search">
+</header>
+
+<nav role="navigation" aria-label="Main navigation">
+    <a href="#home" onclick="showSection('home')">Home</a>
+    <a href="#services" onclick="showSection('services')">Services</a>
+    <a href="#blog" onclick="showSection('blog')">Blog</a>
+    <a href="#calculators" onclick="showSection('calculators')">Calculators</a>
+    <a href="#voice-guides" onclick="showSection('voice-guides')">Voice Guides</a>
+    <a href="#chat" onclick="showSection('chat')">Feedback & Chat</a>
+    <a href="#contact" onclick="showSection('contact')">Contact</a>
+</nav>
+
+<main id="home" class="section active">
+    <section class="service-buttons" aria-labelledby="services-heading">
+        <h2 id="services-heading" style="display: none;">PC Software Services</h2>
+        <button class="service-btn" onclick="alert('Software Installation Service Activated!')">Install OS & Apps</button>
+        <button class="service-btn" onclick="alert('Troubleshooting Guide Opened!')">Troubleshoot Errors</button>
+        <button class="service-btn" onclick="alert('Optimization Tools Downloaded!')">Optimize Performance</button>
+        <button class="service-btn" onclick="alert('Custom Software Config Started!')">Custom Configurations</button>
+        <button class="service-btn" onclick="alert('Security Scan Initiated!')">Virus & Security</button>
+        <button class="service-btn" onclick="alert('Backup Service Booked!')">Data Backup</button>
+    </section>
+</main>
+
+<section id="services" class="section">
+    <h2>PC Software Services Overview</h2>
+    <p>Comprehensive solutions for all your PC software needs, from installation to optimization.</p>
+    <!-- Reuse service buttons here if needed -->
+</section>
+
+<section id="blog" class="section">
+    <h2>Software Blog Hub</h2>
+    <input type="text" id="blog-search" placeholder="Search blog posts..." oninput="filterBlogPosts()">
+    <section class="blog-posts" id="blog-tiles">
+        <!-- Dynamic blog posts -->
+    </section>
+</section>
+
+<section id="calculators" class="section">
+    <h2>Real-Time Scientific Calculators</h2>
+    <p>Perform instant calculations with our interactive tools.</p>
+    <div class="calculators">
+        <div class="calculator">
+            <h3>Basic Calculator</h3>
+            <input type="text" id="calc-input" placeholder="Enter expression e.g., 2+2*3" aria-label="Calculator input">
+            <button onclick="calculate()">Calculate</button>
+            <p id="calc-result">Result: </p>
+        </div>
+        <div class="calculator">
+            <h3>Scientific Calculator (Trig)</h3>
+            <input type="number" id="angle" placeholder="Angle in degrees" step="0.01">
+            <select id="trig-func">
+                <option value="sin">sin</option>
+                <option value="cos">cos</option>
+                <option value="tan">tan</option>
+            </select>
+            <button onclick="scientificCalc()">Compute</button>
+            <p id="trig-result">Result: </p>
+        </div>
+        <div class="calculator">
+            <h3>Unit Converter (Length)</h3>
+            <input type="number" id="value" placeholder="Value" step="0.01">
+            <select id="from-unit">
+                <option value="m">Meters</option>
+                <option value="km">Kilometers</option>
+                <option value="ft">Feet</option>
+            </select>
+            to
+            <select id="to-unit">
+                <option value="m">Meters</option>
+                <option value="km">Kilometers</option>
+                <option value="ft">Feet</option>
+            </select>
+            <button onclick="convertUnits()">Convert</button>
+            <p id="unit-result">Result: </p>
+        </div>
+    </div>
+</section>
+
+<section id="voice-guides" class="section">
+    <h2>Developer Voice Tags</h2>
+    <p>Listen to audio guides from our developers for software tips.</p>
+    <div class="voice-tags">
+        <div class="voice-tag">
+            <h3>OS Installation Guide</h3>
+            <p>Step-by-step voice tutorial.</p>
+            <button onclick="speak('Welcome to OS installation. First, boot from USB...')">Play Voice Tag</button>
+        </div>
+        <div class="voice-tag">
+            <h3>Troubleshooting Tips</h3>
+            <p>Quick fixes for common issues.</p>
+            <button onclick="speak('For blue screen errors, check drivers...')">Play Voice Tag</button>
+        </div>
+        <div class="voice-tag">
+            <h3>Optimization Hacks</h3>
+            <p>Boost your PC speed.</p>
+            <button onclick="speak('Disable startup programs to improve boot time...')">Play Voice Tag</button>
+        </div>
+    </div>
+</section>
+
+<section id="chat" class="section">
+    <h2>Exclusive Feedback & Chat</h2>
+    <p>Share your thoughts via text, voice, images, or videos.</p>
+    <div id="chat-section" class="active">
+        <div id="chat-messages"></div>
+        <div class="chat-inputs">
+            <input type="text" id="chat-text" placeholder="Type message...">
+            <button onclick="recordVoice()">🎤 Voice</button>
+            <input type="file" id="chat-image" accept="image/*" style="display:none;" onchange="uploadMedia(this)">
+            <input type="file" id="chat-video" accept="video/*" style="display:none;" onchange="uploadMedia(this)">
+            <button onclick="document.getElementById('chat-image').click()">🖼 Image</button>
+            <button onclick="document.getElementById('chat-video').click()">📹 Video</button>
+            <button onclick="sendMessage()">Send</button>
+        </div>
+    </div>
+</section>
+
+<section id="contact" class="section">
+    <h2>Contact Us</h2>
+    <form>
+        <label for="name">Name:</label>
+        <input type="text" id="name">
+        <label for="email">Email:</label>
+        <input type="email" id="email">
+        <label for="message">Message:</label>
+        <textarea id="message"></textarea>
+        <button type="submit">Send</button>
+    </form>
+</section>
+
+<!-- Footer (unchanged from original) -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3">
+                <div class="widget">
+                    <h5 class="widgetheading">Get in touch</h5>
+                    <address>
+                        <strong>Mitochondria Corporation</strong><br>
+                        <b>Registered Office </b> :Seattle WA, United States,<br>
+                        <a href="http://vhnsnc.edu.in/index.php"><b>Locality </b> :VHN Senthikumara Nadar College ,Virudhunagar </a><br>
+                    </address>
+                    <p>
+                        <i class="icon-phone"></i> Tel: +91 9597563183 <br>
+                        <i class="icon-envelope-alt"></i> Mitochondriadigitalservices@gmail.com
+                    </p>
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <div class="widget">
+                    <h5 class="widgetheading">Quick Links</h5>
+                    <ul class="link-list">
+                        <li><a href="https://drive.google.com/file/d/11VTXW3D7GXa2IR34xovytb__pcg8SPvp/view?usp=drive_link">Terms and conditions</a></li>
+                        <li><a href="https://drive.google.com/file/d/11VTXW3D7GXa2IR34xovytb__pcg8SPvp/view?usp=drive_link">Disclaimer</a></li>
+                        <li><a href="https://drive.google.com/file/d/11VTXW3D7GXa2IR34xovytb__pcg8SPvp/view?usp=drive_link">Affiliate Online Business Policy</a></li>
+                        <li><a href="https://docs.google.com/forms/d/e/1FAIpQLScPHe5qM2wbVKaUEHQ8U-kWh3mfHVMLL3B6BBTIasX5ltqusQ/viewform?usp=header">Feedback</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <div class="widget">
+                    <h5 class="widgetheading">News, Economics & Business inside</h5>
+                    <ul class="link-list">
+                        <li><a href="https://mitochondriadigitalmilleniumservices.blogspot.com/2025/10/0-todays-us-economic-highlights-wsj.html">Today's US Economic Highlights: WSJ Insights on Key Indicators (October 9, 2025)</a></li>
+                        <li><a href="https://mitochondriadigitalmilleniumservices.blogspot.com/2025/10/todays-tech-highlights-october-9-2025.html">NVIDIA, SpaceX, Oracle news & more...</a></li>
+                        <li><a href="https://mitochondriadigitalmilleniumservices.blogspot.com/p/your-inner-inventor-fresh-diy.html">Ign Fresh DIY Electrical Sparks from October 2025</a></li>
+                        <li><a href="https://drive.google.com/file/d/1b85kGOVqdm-Ptr5RhBb36RgDT6z_K9oK/view?usp=sharing">Mitochondria Internet Archives</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <div class="widget">
+                    <h5 class="widgetheading">Visit our Channels</h5>
+                    <ul class="link-list">
+                        <li><a href="https://youtube.com/@techfjordchannel?si=twpivogapypm_ZCY">Tech-Fjord Channel</a></li>
+                        <li><a href="https://youtube.com/@mr.manmithvlogs4324?si=uNFMaocArp3ZjONb">Mr.Manmith vlogs</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="sub-footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="copyright">
+                        <p>
+                            <span>&copy; 2025 Mitochondria Corporation ALL RIGHTS RESERVED. By </span><a href="https://drive.google.com/file/d/1LnOBGp3FzNR6ulYiUOwB15M2O8BoSBk2/view?usp=drive_link" target="_blank">Mitochondria Digital Millenium Services</a>
+                        </p>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <ul class="social-network">
+                        <li><a href="#" data-placement="top" title="Facebook"><i class="fa fa-facebook"></i></a></li>
+                        <li><a href="#" data-placement="top" title="Twitter"><i class="fa fa-twitter"></i></a></li>
+                        <li><a href="#" data-placement="top" title="Linkedin"><i class="fa fa-linkedin"></i></a></li>
+                        <li><a href="#" data-placement="top" title="Pinterest"><i class="fa fa-pinterest"></i></a></li>
+                        <li><a href="#" data-placement="top" title="Google plus"><i class="fa fa-google-plus"></i></a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<div id="feedback" onclick="openFeedback()">💬 Feedback</div>
+<div id="dark-toggle" onclick="toggleDarkMode()">🌙 Dark Mode</div>
+
+<!-- Feedback Modal (enhanced for chat preview) -->
+<div id="feedback-modal">
+    <h3>Quick Feedback</h3>
+    <textarea placeholder="Your thoughts..."></textarea>
+    <button onclick="submitFeedback()">Submit</button>
+    <button onclick="closeModal('feedback-modal')">Close</button>
+</div>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+// Blog posts data (blogging focus)
+const blogPosts = [
+    { id: 'post1', title: 'Top 10 PC Software for 2025', category: 'software', excerpt: 'Discover essential tools for productivity...', image: 'https://via.placeholder.com/300x180?text=Software+2025' },
+    { id: 'post2', title: 'Windows 11 Optimization Guide', category: 'tutorial', excerpt: 'Step-by-step tweaks for better performance...', image: 'https://via.placeholder.com/300x180?text=Win11+Guide' },
+    { id: 'post3', title: 'Best Antivirus Software Review', category: 'security', excerpt: 'Comparing top free and paid options...', image: 'https://via.placeholder.com/300x180?text=Antivirus' },
+    // Add more posts as needed
+];
+
+// Generate blog tiles
+function generateBlogTiles() {
+    document.getElementById('blog-tiles').innerHTML = blogPosts.map(post => `
+        <div class="blog-post" data-title="${post.title.toLowerCase()}" onclick="showBlogPost('${post.id}')">
+            <img src="${post.image}" alt="${post.title}">
+            <h3>${post.title}</h3>
+            <p>${post.excerpt}</p>
+        </div>
+    `).join('');
+}
+
+// Filter blog posts
+function filterBlogPosts() {
+    const query = document.getElementById('blog-search').value.toLowerCase();
+    const filtered = blogPosts.filter(post => post.title.toLowerCase().includes(query));
+    document.getElementById('blog-tiles').innerHTML = filtered.map(post => `
+        <div class="blog-post" data-title="${post.title.toLowerCase()}" onclick="showBlogPost('${post.id}')">
+            <img src="${post.image}" alt="${post.title}">
+            <h3>${post.title}</h3>
+            <p>${post.excerpt}</p>
+        </div>
+    `).join('');
+}
+
+// Show full blog post (simple alert for demo)
+function showBlogPost(id) {
+    const post = blogPosts.find(p => p.id === id);
+    alert(`Full Post: ${post.title}\n\n${post.excerpt}\n\n(Read more in full view)`);
+}
+
+// Section navigation
+function showSection(section) {
+    document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+    document.getElementById(section).classList.add('active');
+    if (section === 'blog') generateBlogTiles();
+}
+
+// Search (global, for blog/services)
+document.addEventListener('DOMContentLoaded', function() {
+    document.getElementById('searchBox').addEventListener('input', function() {
+        // Simple global search placeholder
+        alert('Searching for: ' + this.value);
+    });
+});
+
+// Calculators
+function calculate() {
+    const input = document.getElementById('calc-input').value;
+    try {
+        // Simple eval for basic math (use math.js for production)
+        const result = eval(input);
+        document.getElementById('calc-result').textContent = 'Result: ' + result;
+    } catch (e) {
+        document.getElementById('calc-result').textContent = 'Error: Invalid expression';
+    }
+}
+
+function scientificCalc() {
+    const angle = parseFloat(document.getElementById('angle').value);
+    const func = document.getElementById('trig-func').value;
+    let result;
+    const rad = angle * Math.PI / 180;
+    if (func === 'sin') result = Math.sin(rad);
+    else if (func === 'cos') result = Math.cos(rad);
+    else if (func === 'tan') result = Math.tan(rad);
+    document.getElementById('trig-result').textContent = 'Result: ' + result.toFixed(4);
+}
+
+function convertUnits() {
+    const value = parseFloat(document.getElementById('value').value);
+    const from = document.getElementById('from-unit').value;
+    const to = document.getElementById('to-unit').value;
+    let fromMeters, toMeters;
+    // Simple conversions
+    const conversions = { m: 1, km: 0.001, ft: 0.3048 };
+    fromMeters = value * conversions[from];
+    const result = fromMeters / conversions[to];
+    document.getElementById('unit-result').textContent = 'Result: ' + result.toFixed(2) + ' ' + to;
+}
+
+// Voice (Web Speech API)
+function speak(text) {
+    if ('speechSynthesis' in window) {
+        const utterance = new SpeechSynthesisUtterance(text);
+        utterance.rate = 0.8;
+        speechSynthesis.speak(utterance);
+    } else {
+        alert('Voice synthesis not supported in this browser.');
+    }
+}
+
+// Chat & Feedback
+let chatMessages = [];
+function sendMessage() {
+    const text = document.getElementById('chat-text').value;
+    if (text) {
+        chatMessages.push({ type: 'text', content: text, from: 'user' });
+        updateChat();
+        document.getElementById('chat-text').value = '';
+        // Simulate response
+        setTimeout(() => {
+            chatMessages.push({ type: 'text', content: 'Thanks for your feedback! We\'ll review it.', from: 'dev' });
+            updateChat();
+        }, 1000);
+    }
+}
+
+function recordVoice() {
+    if ('mediaRecorder' in navigator) {
+        // Simple placeholder: use actual MediaRecorder for production
+        alert('Voice recording started (demo).');
+        chatMessages.push({ type: 'voice', content: 'audio-placeholder.mp3', from: 'user' });
+        updateChat();
+    } else {
+        alert('Voice recording not supported.');
+    }
+}
+
+function uploadMedia(input) {
+    const file = input.files[0];
+    if (file) {
+        const type = file.type.startsWith('image') ? 'image' : 'video';
+        chatMessages.push({ type, content: URL.createObjectURL(file), from: 'user' });
+        updateChat();
+    }
+}
+
+function updateChat() {
+    const container = document.getElementById('chat-messages');
+    container.innerHTML = chatMessages.map(msg => {
+        if (msg.type === 'text') {
+            return `<div class="chat-message ${msg.from}">${msg.from === 'user' ? 'You' : 'Dev'}: ${msg.content}</div>`;
+        } else if (msg.type === 'image') {
+            return `<div class="chat-message user"><img src="${msg.content}" style="max-width:200px;" alt="Uploaded image"></div>`;
+        } else if (msg.type === 'video') {
+            return `<div class="chat-message user"><video src="${msg.content}" controls style="max-width:200px;"></video></div>`;
+        } else if (msg.type === 'voice') {
+            return `<div class="chat-message user">Voice Note: <audio src="${msg.content}" controls></audio></div>`;
+        }
+    }).join('');
+    container.scrollTop = container.scrollHeight;
+}
+
+// Dark Mode & Feedback
+function toggleDarkMode() {
+    document.body.classList.toggle('dark-mode');
+}
+
+function openFeedback() {
+    document.getElementById('feedback-modal').style.display = 'block';
+}
+
+function closeModal(id) {
+    document.getElementById(id).style.display = 'none';
+}
+
+function submitFeedback() {
+    alert('Feedback submitted!');
+    closeModal('feedback-modal');
+}
+
+// Init
+document.addEventListener('DOMContentLoaded', generateBlogTiles);
+</script>
+
+</body>
+</html>
